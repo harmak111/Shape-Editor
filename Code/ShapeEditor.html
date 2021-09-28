@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+     <title>Shape Editor</title>
+
+     <script type="text/javascript" src="../Common/webgl-utils.js"></script>
+     <script type="text/javascript" src="../Common/initShaders.js"></script>
+     <script type="text/javascript" src="../Common/MV.js"></script>
+     <script type="text/javascript" src="ShapeEditor.js"></script>
+     <script type="text/javascript" src="../Common/Konva.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
+          integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
+          crossorigin="anonymous"></script>
+
+</head>
+
+<body style="position: relative; height: 1px; width: 213px; border-bottom-style: double; cursor: default;">
+     <div style="font-size: 40px;text-decoration: none;border-bottom-style: double;width: 212px;">Shape Editor</div>
+     <div id="container"
+          style="width:1024px;height:600px;border:1px solid rgb(126, 118, 118);position: relative;left: 239px;top: 27px;background-color: snow;">
+          <div class="konvajs-content" role="presentation"
+               style="position: relative; user-select: none; width: 1024px; height: 600px;"><canvas width="1280"
+                    height="750"
+                    style="padding: 0px; margin: 0px; border: 0px; background: transparent; position: absolute; top: 0px; left: 0px; width: 1024px; height: 600px; display: block;"></canvas>
+          </div>
+     </div>
+     <div
+          style="padding-left: 13px;padding-top: 12p;font-size: 20px;text-decoration: none;width: 144px;position: relative;top: -575px;left: 18px;height: 26px;border-bottom-style: double;">
+          <b>Shape Selector</b></div>
+     <div style="position: relative;top: -590px;width: 150px;height: 1px;padding-left: 65px;"> <a class="geItem"
+               title="square" style="overflow: hidden; width: 34px; height: 27px; padding: 1px;"><svg
+                    style="left: -20px;top: 6px;width: 32px;height: 30px;display: block;position: relative;overflow: hidden;">
+                    <g transform="translate(0.5,0.5)" style="visibility: visible;">
+                         <rect onclick="createSquare();" x="2.08" y="1.06" width="22.2" height="22.2" fill="#ffffff"
+                              stroke="#000000" stroke-width="1.3" pointer-events="all"></rect>
+                    </g>
+               </svg></a> <a class="geItem" title="rectangle"
+               style="overflow: hidden;width: 36px;height: 32px;padding: 1px;"><svg
+                    style="left: 30px;top: -48px;width: 45px;height: 30px;display: block;position: relative;overflow: hidden;">
+                    <g transform="translate(0.5,0.5)" style="visibility: visible;">
+                         <rect onclick="createRectangle();" id="rectangle" x="2.44" y="7.68" width="30.8" height="19.4"
+                              fill="#ffffff" stroke="#000000" stroke-width="1.3" pointer-events="all"></rect>
+                    </g>
+               </svg></a> <a id="circle" class="geItem" title="circle"
+               style="overflow: hidden; width: 34px; height: 32px; padding: 1px;"><svg
+                    style="left: -24px;top: -45px;width: 32px;height: 30px;display: block;position: relative;overflow: hidden;">
+                    <g transform="translate(0.5,0.5)" style="visibility: visible;">
+                         <ellipse onclick="createCircle();" cx="15.98" cy="14.96" rx="13.600000000000001"
+                              ry="13.600000000000001" fill="#ffffff" stroke="#000000" stroke-width="1.3"
+                              pointer-events="all"></ellipse>
+                    </g>
+               </svg></a> <a id="triangle" class="geItem" title="triangle"
+               style="overflow: hidden; width: 34px; height: 32px; padding: 1px;"><svg
+                    style="left: 33px;top: -94px;width: 32px;height: 30px;display: block;position: relative;overflow: hidden;">
+                    <g transform="translate(0.5,0.5)" style="visibility: visible;">
+                         <path onclick="createTriangle();" d="M 5.78 1.36 L 26.18 14.96 L 5.78 28.56 Z" fill="#ffffff"
+                              stroke="#000000" stroke-width="1.3" stroke-miterlimit="10" pointer-events="all"></path>
+                    </g>
+               </svg></a> <a id="line" class="geItem" title="line"
+               style="overflow: hidden; width: 34px; height: 32px; padding: 1px;"><svg
+                    style="left: -22px;top: -87px;width: 32px;height: 30px;display: block;position: relative;overflow: hidden;">
+                    <g onclick="createLine();" transform="translate(0.5,0.5)" style="visibility: visible;">
+                         <path d="M 2.12 27.56 L 28.62 1.06" fill="none" stroke="white" stroke-width="9.3"
+                              stroke-miterlimit="10" pointer-events="stroke" visibility="hidden"></path>
+                         <path d="M 2.12 27.56 L 28.62 1.06" fill="none" stroke="#000000" stroke-width="1.3"
+                              stroke-miterlimit="10" pointer-events="stroke"></path>
+                    </g>
+               </svg></a> <a id="ellipse" class=" geItem" title="ellipse"
+               style="overflow: hidden; width: 34px; height: 32px; padding: 1px;"><svg
+                    style="left: 30px;top: -136px;width: 41px;height: 30px;display: block;position: relative;overflow: hidden;">
+                    <g transform="translate(0.5,0.5)" style="visibility: visible;">
+                         <ellipse onclick="createEllipse();" cx="16.84" cy="14.88" rx="15.399999999999999" ry="10.6"
+                              fill="#ffffff" stroke="#000000" stroke-width="1.3" pointer-events="all"></ellipse>
+                    </g>
+               </svg></a> <a class="geItem" title="polygon"
+               style="overflow: hidden; width: 34px; height: 32px; padding: 1px;"><svg
+                    style="left: -21px;top: -133px;width: 32px;height: 30px;display: block;position: relative;overflow: hidden;">
+                    <g transform="translate(0.5,0.5)" style="visibility: visible;">
+                         <path onclick="createPolygon();"
+                              d="M 8.64 5.28 L 23.04 5.28 L 30.24 14.88 L 23.04 24.48 L 8.64 24.48 L 1.44 14.88 Z"
+                              fill="#ffffff" stroke="#000000" stroke-width="1.3" stroke-miterlimit="10"
+                              pointer-events="all"></path>
+                    </g>
+               </svg></a> <a class="geItem" title="arrow"
+               style="overflow: hidden; width: 34px; height: 32px; padding: 1px;"><svg
+                    style="left: 30px;top: -181px;width: 32px;height: 30px;display: block;position: relative;overflow: hidden;">
+                    <g onclick="createArrow();" transform="translate(0.5,0.5)" style="visibility: visible;">
+                         <path d="M 5.04 25.2 L 24.15 6.09" fill="none" stroke="white" stroke-width="9.3"
+                              stroke-miterlimit="10" pointer-events="stroke" visibility="hidden"></path>
+                         <path d="M 5.04 25.2 L 24.15 6.09" fill="none" stroke="#000000" stroke-width="1.3"
+                              stroke-miterlimit="10" pointer-events="stroke"></path>
+                         <path d="M 25.71 4.53 L 24.67 7.65 L 24.15 6.09 L 22.59 5.57 Z" fill="#000000" stroke="#000000"
+                              stroke-width="1.3" stroke-miterlimit="10" pointer-events="all"> </path>
+                    </g>
+               </svg></a>
+          <button id="bezier" onclick="createBezierCurve();" style="position: relative;left: -28px;top: -168px;">
+               <b>Bezier Curve</b></button><br> <br>
+     </div>
+     <div id="midLine" style="position: relative;border-bottom-style: groove;top: -333px;width: 246px;left: -8px;">
+
+     </div>
+
+
+     <div
+          style="padding-left: 13px;padding-bottom: 3px;font-size: 20px;text-decoration: none;width: 112px;position: relative;left: 30px;border-bottom-style: double;top: -323px;">
+          <b>Operations</b></div>
+     <div style="position: relative;left: 17px;top: -315px;width: 170px;height:12px">
+          <button id="clear" onclick="clearS();" style="position: relative;left: 20px;top: 0px;">
+               <b>Clear</b></button><br> <br>
+          <button type="button" onclick="savePDF();" id="saveAsPDF"
+               style="position: relative;left: 86px;top: -41px;"><b>PDF</b></button><br> <br>
+          <button type="button" id="saveAsJPEG" onclick="saveImage();"
+               style="position: relative;left: 86px;top: -41px;"><b>JPEG</b></button><br> <br>
+          <button type="button" id="saveAsJSON" onclick="saveJSON();"
+               style="position: relative;left: 18px;top: -82px;"><b>JSON</b></button><br> <br>
+          <button onclick="drawBoard()" title="draw grid" type="button" id="drawBoard"
+               style="position: relative;left: 23px;top: -81px;"><b>Grid</b></button><br> <br>
+          <button onclick="deleteObj()" title="delete single object with click" type="button" id="saveAsJSON"
+               style="position: relative;left: 84px;top: -122px;"><b>Delete</b></button><br> <br>
+          <button title="Zoom Canvas with scroll" type="button" id="zoom" onclick="zoom();"
+               style="position: relative;left: 25px;top: -120px;"><b>Zoom Canvas</b></button><br> <br>
+          <div style="position: relative;top: -123px;left: 30px;">
+               <label for="colorPicker"><b>Color</b></label>
+               <input type="color" id="color" name="color" value="#000000" onchange="colorPickerM();">
+          </div><br>
+          <div style="position: relative;top: -128px;left: 16px;">
+               <b> Thickness</b>
+               <input onchange="changeSW();" type="range" min="1" max="10" value="1" id="sw">
+          </div>
+          <div style="position: relative;left: -1px;top: -118px;"><b>Open Image with JSON</b> <input type="file"
+                    id="file-input"></div>
+     </div>
+     <script> document.getElementById('file-input').addEventListener('change', readSingleFile, false);
+     </script>
+
+
+</body>
+
+</html>
